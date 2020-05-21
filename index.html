@@ -101,7 +101,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
   <script language="javascript">
     var last_donate_pointer = 0;
+    const dateTime = Date.now();
+    const timestamp = Math.floor(dateTime / 1000);
     const display_donates = 10;
+    
     function check_donate() {
       $.ajax({
         url: "https://aws.ronny.tw/jothon/fake-donate-api.php",
@@ -109,8 +112,10 @@
         success: function(result) {
           if(result.length != last_donate_pointer)
           {
-            console.log(result[last_donate_pointer]);
-            
+            if(result[last_donate_pointer].time < timestamp - 60)
+            {              
+            }
+            //console.log(result[last_donate_pointer]);            
             $('#new-donate p').html(function() {
               var result_text = `
                 感謝 <b id="data-name"></b> 贊助 <b id="data-money"></b><br>
@@ -139,9 +144,15 @@
             setTimeout(check_donate, 2000);
         }
       });
-    }
+    }    
     
-    check_donate();
-    
+    $.ajax({
+        url: "https://aws.ronny.tw/jothon/fake-donate-api.php",
+        dataType: "json",
+        success: function(result) {
+          last_donate_pointer = result.length;
+          check_donate();
+        }
+    });
   </script>
 </body>
