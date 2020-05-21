@@ -7,55 +7,60 @@
   <title>g0v donate checker</title>
   <style>
     a, p, h1, h2, h3, h4, h5, h6{
+      font-size: 1.5rem;
       font-family: 'Noto Sans TC', sans-serif;
       text-decoration: none;
       line-height: 2em;
       letter-spacing: 0.1px;
       margin: 0;
+      color: white;
     }
     p {			
       text-align: justify;
       text-justify:inter-ideograph;
+    }
+    b {
+      color: #66FFAA;
     }
     body {
       overflow: hidden;
       margin: 0;
       height: 100vh;
       width: 100vw;
+      background-color: #DDD;
     }
     
     @keyframes jothon-heart-beats
     {
-      0% {background-size: 20%;}
-      10% {background-size: 24%;}
-      20% {background-size: 20%;}
-      80% {background-size: 20%;}
-      90% {background-size: 28%;}
-      100% {background-size: 20%;}
+      0% {background-size: 25%;}
+      10% {background-size: 28%;}
+      25% {background-size: 25%;}
+      80% {background-size: 25%;}
+      90% {background-size: 30%;}
+      100% {background-size: 25%;}
     }
     
     #new-donate {
       position: absolute;
-      right: 5px;
-      top: 15px;
+      right: 10px;
+      top: 30px;
     }
     
     #new-donate > div {
       background-position: center center;	
       background-repeat: no-repeat;	
-      background-size: 20%;
+      background-size: 25%;
       background-Image: url('assets/jothon-bg-light.svg');
       animation: jothon-heart-beats 1s ease 0s infinite alternate;
     }
     
     .marqee {
-      height: 2em;
+      height: 3rem;
       width: 100%;
       overflow: hidden; 
       position: absolute;
       bottom: 0;
-      border: 1px solid #666;
-      background-color: rgba(200,200,200,0.5);
+      background-color: rgba(255,255,255,0.8);
     }
 
     .marqee > ul {
@@ -63,7 +68,7 @@
       margin: 0;
       display: flex;
       list-style-type: none;
-      animation: marqee 15s linear infinite;
+      animation: marqee 25s linear infinite;
       position: absolute;
     }
 
@@ -74,12 +79,12 @@
     }
 
     @keyframes marqee {
-      0% {
+      100% {
         left: 0%;
         transform: translateX(-100%);
       }
 
-      100% {
+      0% {
         left: 100%;
         transform: translateX(0%);
       }
@@ -88,7 +93,7 @@
   </style>
 </head>
 <body>
-  <div id="new-donate" style="opacity: 0; width: 300px;"><div style=" height: 70px; width: 100%; text-align: center;"></div><p style="text-align: center;"></p></div>  
+  <div id="new-donate" style="opacity: 0; width: 300px;"><div style=" height: 100px; width: 100%; text-align: center;"></div><p style="text-align: center;  text-shadow: 0 0 8px #000000;"></p></div>  
   <div class="marqee">
     <ul>
     </ul>
@@ -109,29 +114,29 @@
             $('#new-donate p').html(function() {
               var result_text = `
                 感謝 <b id="data-name"></b> 贊助 <b id="data-money"></b><br>
-                <a id="data-say" style="font-weight: bold; font-size: 1.5rem; word-break: break-all;"></a>
+                <a id="data-say" style="font-weight: bold; font-size: 1.5rem; word-break: break-all; color: #66FFAA;"></a>
               `
               return result_text;
             });
             $('#data-name').text(result[last_donate_pointer].name);
             $('#data-money').text(`$${result[last_donate_pointer].money}`);
             $('#data-say').text(result[last_donate_pointer].say);
-            $('#new-donate').animate({opacity: 1},500).delay(3000).animate({opacity: 0},{duration: 500});
+            $('#new-donate').animate({opacity: 1},500).delay(5000).animate({opacity: 0},{duration: 500});
             last_donate_pointer += 1;
             
             $('.marqee ul').html("");
             for(var num=result.length; num > (result.length - display_donates) && num >0 ; num--)
             {
               console.log(num-1);
-              var header = `<li><a class="donater"></a></li>`;
+              var header = `<li><a class="donater" style="color: black;"></a></li>`;
               var header_dom = $(header);
               $(".donater", header_dom).text(`${result[num-1].name}: $${result[num-1].money}`);
               $('.marqee ul').append(header_dom);
             }
-            setTimeout(check_donate, 4500);
+            setTimeout(check_donate, 6500);
           }
           else
-            setTimeout(check_donate, 500);
+            setTimeout(check_donate, 2000);
         }
       });
     }
