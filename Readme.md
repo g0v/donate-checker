@@ -1,2 +1,2 @@
-¤jªQ²{³õª½¼½¥Î
-·|¤Î®ÉÅã¥ÜDonate°T®§¤Î³Ìªñ10µ§Donateªº¶]°¨¿O
+### å¤§æ¾ç¾å ´ç›´æ’­ç”¨
+æœƒåŠæ™‚é¡¯ç¤ºDonateè¨Šæ¯åŠæœ€è¿‘10ç­†Donateçš„è·‘é¦¬ç‡ˆ
