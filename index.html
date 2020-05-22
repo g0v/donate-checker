@@ -110,47 +110,42 @@
         url: "https://aws.ronny.tw/jothon/fake-donate-api.php",
         dataType: "json",
         success: function(result) {
-          if(result.length != last_donate_pointer)
-          {
-            if(result[last_donate_pointer].time < timestamp - 60)
-            {              
-            }
-            //console.log(result[last_donate_pointer]);            
-            $('#new-donate p').html(function() {
+          $('.marqee ul').html("");
+          for (record of result) {
+            var header = `<li><a class="donater" style="color: black;"></a></li>`;
+            var header_dom = $(header);
+            $(".donater", header_dom).text(`${record.name}: $${record.money}`);
+            $('.marqee ul').append(header_dom);
+
+            if(record.time > last_donate_pointer)
+            {
+              //console.log(result[last_donate_pointer]);            
+              $('#new-donate p').html(function() {
               var result_text = `
                 感謝 <b id="data-name"></b> 贊助 <b id="data-money"></b><br>
                 <a id="data-say" style="font-weight: bold; font-size: 1.5rem; word-break: break-all; color: #66FFAA;"></a>
               `
-              return result_text;
-            });
-            $('#data-name').text(result[last_donate_pointer].name);
-            $('#data-money').text(`$${result[last_donate_pointer].money}`);
-            $('#data-say').text(result[last_donate_pointer].say);
-            $('#new-donate').animate({opacity: 1},500).delay(5000).animate({opacity: 0},{duration: 500});
-            last_donate_pointer += 1;
-            
-            $('.marqee ul').html("");
-            for(var num=result.length; num > (result.length - display_donates) && num >0 ; num--)
-            {
-              console.log(num-1);
-              var header = `<li><a class="donater" style="color: black;"></a></li>`;
-              var header_dom = $(header);
-              $(".donater", header_dom).text(`${result[num-1].name}: $${result[num-1].money}`);
-              $('.marqee ul').append(header_dom);
+                return result_text;
+              });
+              $('#data-name').text(record.name);
+              $('#data-money').text(`$${record.money}`);
+              $('#data-say').text(record.say);
+              $('#new-donate').animate({opacity: 1},500).delay(5000).animate({opacity: 0},{duration: 500});
+              last_donate_pointer = record.time;
             }
-            setTimeout(check_donate, 6500);
           }
-          else
-            setTimeout(check_donate, 2000);
+          setTimeout(check_donate, 6500);
         }
       });
-    }    
+    };
     
     $.ajax({
         url: "https://aws.ronny.tw/jothon/fake-donate-api.php",
         dataType: "json",
         success: function(result) {
-          last_donate_pointer = result.length;
+          if (result.length) {
+            last_donate_pointer = result[result.length - 1].time;
+          }
           check_donate();
         }
     });
