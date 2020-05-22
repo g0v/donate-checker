@@ -111,6 +111,9 @@
         dataType: "json",
         success: function(result) {
           $('.marqee ul').html("");
+          if (last_donate_pointer == 0 && result.length) {
+            last_donate_pointer = result[result.length - 1].time;
+          }
           for (record of result) {
             var header = `<li><a class="donater" style="color: black;"></a></li>`;
             var header_dom = $(header);
@@ -139,15 +142,6 @@
       });
     };
     
-    $.ajax({
-        url: "https://aws.ronny.tw/jothon/fake-donate-api.php",
-        dataType: "json",
-        success: function(result) {
-          if (result.length) {
-            last_donate_pointer = result[result.length - 1].time;
-          }
-          check_donate();
-        }
-    });
+    check_donate();
   </script>
 </body>
