@@ -104,10 +104,16 @@
     const dateTime = Date.now();
     const timestamp = Math.floor(dateTime / 1000);
     const display_donates = 10;
+    if (document.location.href.match(/api=(.*)/)) {
+        var matches = document.location.href.match(/api=(.*)/);
+        api_url = matches[1];
+    } else {
+        api_url = "https://aws.ronny.tw/jothon/fake-donate-api.php";
+    }
     
     function check_donate() {
       $.ajax({
-        url: "https://aws.ronny.tw/jothon/fake-donate-api.php",
+        url: api_url,
         dataType: "json",
         success: function(result) {
           $('.marqee ul').html("");
