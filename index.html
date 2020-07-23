@@ -6,7 +6,7 @@
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&amp;display=swap" rel="stylesheet"/>
   <title>g0v donate checker</title>
   <style>
-    a, p, h1, h2, h3, h4, h5, h6{
+    a, p, h1, h2, h3, h4, h5, h6 {
       font-size: 1.5rem;
       font-family: 'Noto Sans TC', sans-serif;
       text-decoration: none;
@@ -15,7 +15,7 @@
       margin: 0;
       color: white;
     }
-    p {			
+    p {
       text-align: justify;
       text-justify:inter-ideograph;
     }
@@ -29,7 +29,7 @@
       width: 100vw;
       background-color: #DDD;
     }
-    
+
     @keyframes jothon-heart-beats
     {
       0% {background-size: 25%;}
@@ -39,25 +39,25 @@
       90% {background-size: 30%;}
       100% {background-size: 25%;}
     }
-    
+
     #new-donate {
       position: absolute;
       right: 10px;
       top: 30px;
     }
-    
+
     #new-donate > div {
-      background-position: center center;	
-      background-repeat: no-repeat;	
+      background-position: center center;
+      background-repeat: no-repeat;
       background-size: 25%;
       background-Image: url('assets/jothon-bg-light.svg');
       animation: jothon-heart-beats 1s ease 0s infinite alternate;
     }
-    
+
     .marqee {
       height: 3rem;
       width: 100%;
-      overflow: hidden; 
+      overflow: hidden;
       position: absolute;
       bottom: 0;
       background-color: rgba(255,255,255,0.8);
@@ -78,6 +78,15 @@
       font-weight: bold;
     }
 
+    #tkirby {
+       position: relative;
+       margin-left: -640px;
+       left: 50%;
+       width: 1280px;
+       height: 800px;
+       opacity: 0;
+    }
+
     @keyframes marqee {
       100% {
         left: 0%;
@@ -89,17 +98,125 @@
         transform: translateX(0%);
       }
     }
-    
+
   </style>
 </head>
 <body>
-  <div id="new-donate" style="opacity: 0; width: 300px;"><div style=" height: 100px; width: 100%; text-align: center;"></div><p style="text-align: center;  text-shadow: 0 0 8px #000000;"></p></div>  
+  <div id="tkirby"></div>
+  <div id="new-donate" style="opacity: 0; width: 300px;"><div style=" height: 100px; width: 100%; text-align: center;"></div><p style="text-align: center;  text-shadow: 0 0 8px #000000;"></p></div>
   <div class="marqee">
     <ul>
     </ul>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
   <script language="javascript">
+    var anime_config = [
+      // sx, sy, w, h, tx, ty, img
+      [89.57,105.841,176.66,220.313,4.5 ,4  ,[18,23],   ],// 1
+      [296.289,105.841,167.143,220.313 ,3.5,3  ,[16,17],   ],// 2
+      [497.441 ,105.841,38.379,220.313 ,3    ,4.5,[21,22],   ],// 3
+      [573.496,105.841,173.868,220.313 ,1.5,3  ,[11,15],   ],// 4
+      [783.145,105.841,159.125,220.313 ,0.5,3  ,[10,14],   ],// 5
+      [973.639,105.841,208.997,220.313 ,1  ,4.5,[19,20],   ],// 6
+      [94.569,505.256,133.639,171,4.5 ,2  ,[9, 13],   ],// 7
+      [235.32,508.539,160.136,168,4.5 ,0.5,[4],       ],// 8
+      [412.229,508.539,128.691,168,3  ,0.5,[2, 3 ],   ],// 9
+      [673.049,508.539,125.469,168,3  ,1.5,[7, 8 ],   ],// 10
+      [820.646,508.539,124.609,168,2.5,3.5,[12],      ],// 11
+      [962.873,508.539,102.48,168,1   ,1.5,[5, 6 ],   ],// 12
+      [1082.111,508.539,116.357,168,1 ,0.5,[0, 1 ],   ],// 13
+    ];
+    var x = 0;
+    var anime_word = function(){
+
+        if (x >= anime_config.length) {
+          anime_final();
+          return;
+        }
+        $('#tkirby').css({'opacity': '1'});
+        var audio_dom = $('<audio></audio>');
+        audio_dom[0].src = 'assets/sound/click.mp3';
+        audio_dom[0].play();
+
+    	var img_dom = $('<img>');
+    	img_dom.attr('src', 'assets/chars/char (' + (x+1) + ').png').attr('id', 'animate-' + x);
+    	img_dom.css({
+    		position: 'absolute',
+    		left: anime_config[x][0],
+    		top: anime_config[x][1],
+    		width: anime_config[x][2],
+    		height: anime_config[x][3],
+    	});
+
+    	$('#tkirby').append(img_dom);
+    	x++;
+      if(x <= anime_config.length) {
+        setTimeout(function(){
+          anime_word();
+        },200);
+      }
+    };
+
+    var anime_final = function(){
+        var audio_dom = $('<audio></audio>');
+        audio_dom[0].src = 'assets/sound/click.mp3';
+        audio_dom[0].play();
+        var c = 0;
+
+        for (var img_id = 0; img_id < 16; img_id++) {
+            var dom = $('<div></div>');
+            dom.attr('id', 'tkirby-img-' + img_id);
+            dom.css({
+          		  position: 'absolute',
+                width: 305,
+                height: 168,
+                top: 15 + Math.floor(c / 4) * 168,
+                left: 30 + (c % 4) * 305,
+                opacity: 0,
+                'background-image': 'url(\'assets/img/tkirby/tkirby (' + (img_id+1) + ').jpg\')',
+                'background-size': 'cover',
+                'background-repeat': 'no-repeat',
+                'background-position': 'center'
+            });
+            $('#tkirby').append(dom);
+            c ++;
+        }
+        c = 0;
+        for (let id in anime_config) {
+            let ac = anime_config[id];
+            c ++;
+
+            setTimeout(function(){
+                $('#animate-' + id).animate({ // 移動文字到定點
+                    left: ac[4]*244+30-ac[2]/2,
+                    top: ac[5]*135+15-ac[3]/2,
+                }, 2000);
+            }, 500 + 150 * c );
+
+            setTimeout(function(){
+                $('#animate-' + id).animate({ // 文字消失同時影像出來
+                    opacity: 0
+                }, 2000);
+            }, 500 + 2000 + 150 * c);
+
+            setTimeout(function(){
+                ac[6].map(function(img_id){ // 文字消失同時影像出來
+                  $('#tkirby-img-' + img_id).animate({
+                      opacity: 1
+                  }, 2000);
+                });
+            }, 500 + 2000 + 150 * c);
+        }
+        setTimeout(function(){
+          $('#tkirby').animate({opacity: 0}, 1000, function() {
+            $('#tkirby').html('');
+            x = 0;
+            c = 0;
+          });
+        }, 15000);
+        x ++;
+    };
+
     var last_donate_pointer = 0;
     const dateTime = Date.now();
     const timestamp = Math.floor(dateTime / 1000);
@@ -110,7 +227,26 @@
     } else {
         api_url = "https://jothon-donate-test.ronny.tw/fake-donate-api.php";
     }
-    
+    function emit_donate(_name, _money, _say) {
+      var audio_dom = $('<audio></audio>');
+      audio_dom[0].src = 'assets/sound/se_maoudamashii_magical21.mp3';
+      audio_dom[0].play();
+      if(_money >= 50000) { //TKIRBY CAN HELP
+        anime_word();
+      }
+      $('#new-donate p').html(function() {
+        var result_text = `
+          感謝 <b id="data-name"></b> 贊助 <b id="data-money"></b><br>
+          <a id="data-say" style="font-weight: bold; font-size: 1.5rem; word-break: break-all; color: #66FFAA;"></a>
+        `
+        return result_text;
+      });
+      $('#data-name').text(_name);
+      $('#data-money').text(`$${_money}`);
+      $('#data-say').text(_say);
+      $('#new-donate').animate({opacity: 1},500).delay(5000).animate({opacity: 0},{duration: 500});
+    }
+
     function check_donate() {
       $.ajax({
         url: api_url,
@@ -128,18 +264,7 @@
 
             if(record.time > last_donate_pointer)
             {
-              //console.log(result[last_donate_pointer]);            
-              $('#new-donate p').html(function() {
-              var result_text = `
-                感謝 <b id="data-name"></b> 贊助 <b id="data-money"></b><br>
-                <a id="data-say" style="font-weight: bold; font-size: 1.5rem; word-break: break-all; color: #66FFAA;"></a>
-              `
-                return result_text;
-              });
-              $('#data-name').text(record.name);
-              $('#data-money').text(`$${record.money}`);
-              $('#data-say').text(record.say);
-              $('#new-donate').animate({opacity: 1},500).delay(5000).animate({opacity: 0},{duration: 500});
+              emit_donate(record.name, record.money, record.say);
               last_donate_pointer = record.time;
             }
           }
@@ -147,7 +272,7 @@
         }
       });
     };
-    
+
     check_donate();
   </script>
 </body>
