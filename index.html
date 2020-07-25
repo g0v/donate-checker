@@ -228,10 +228,10 @@
         api_url = "https://jothon-donate-test.ronny.tw/fake-donate-api.php";
     }
     function emit_donate(_name, _money, _say) {
-      var audio_dom = $('<audio></audio>');
-      audio_dom[0].src = 'assets/sound/se_maoudamashii_magical21.mp3';
-      audio_dom[0].play();
       if(_money >= 50000) { //TKIRBY CAN HELP
+        var audio_dom = $('<audio></audio>');
+        audio_dom[0].src = 'assets/sound/se_maoudamashii_magical21.mp3';
+        audio_dom[0].play();
         anime_word();
       }
       $('#new-donate p').html(function() {
