@@ -257,6 +257,9 @@
             last_donate_pointer = result[result.length - 1].time;
           }
           for (record of result) {
+            if (!record.name) {
+              record.name = '沒有人';
+            }
             var header = `<li><a class="donater" style="color: black;"></a></li>`;
             var header_dom = $(header);
             $(".donater", header_dom).text(`${record.name}: $${record.money}`);
